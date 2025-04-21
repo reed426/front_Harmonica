@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import axios from 'axios';
 
-const DM_ID = '567329414493245440';
+const DM_ID = '44444433321232312';
 
 export default function StompChat() {
   const [messages, setMessages] = useState([]);
@@ -61,7 +61,11 @@ export default function StompChat() {
             );
           } else if (data?.type === 'DELETE') {
             setMessages((prev) =>
-              prev.filter((msg) => msg.messageId !== data.message.messageId)
+              prev.map((msg) =>
+                msg.messageId === data.message.messageId
+                  ? { ...msg, content: '[삭제된 메시지]' }
+                  : msg
+              )
             );
           }
         });
